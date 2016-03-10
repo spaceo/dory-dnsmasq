@@ -1,4 +1,4 @@
-FROM andyshinn/dnsmasq
+FROM andyshinn/dnsmasq:2.75
 
 COPY dnsmasq.conf /etc/dnsmasq.conf
 COPY start-with-domain-ip.sh /usr/local/bin
