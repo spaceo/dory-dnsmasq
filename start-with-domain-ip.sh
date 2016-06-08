@@ -1,21 +1,14 @@
 #!/bin/sh
 
-ADDR="$1"
+address=
+while [ "$#" -ge 2 ]; do
+  address="${address}address=/$1/$2\n"
+  shift 2
+done
 
-if [ -z "$1" ]; then
-  echo "Domain not specified.  Using docker"
-  DOMAIN='docker'
+if [ -n "$address" ]; then
+  sed -i -e "s|^address.*|${address}|" /etc/dnsmasq.conf
 fi
-
-if [ -z "$2" ]; then
-  echo "IP not specified.  Using 127.0.0.1"
-  ADDR='127.0.0.1'
-fi
-
-DOMAIN="$1"
-ADDR="$2"
-
-sed -i -e "s|^address.*|address=/$DOMAIN/$ADDR|" /etc/dnsmasq.conf
 
 echo "Starting with configuration:"
 cat /etc/dnsmasq.conf
